@@ -32,7 +32,7 @@ function execute_lambdas(crontab, callback ) {
     async.each(crontab['jobs'], function(job,iteratorcallback) { 
             console.log("job is",job);
             console.log("schedule is",job["schedule"]);
-            var options = {currentDate: eventTime};
+            var options = {currentDate: eventtime};
             var interval = parser.parseExpression(job["schedule"],options);
             var runtime = interval.next();
             // coerce runtime into a string with seconds
@@ -64,7 +64,7 @@ function execute_lambdas(crontab, callback ) {
 
 
 exports.handler = function(event, context) {
-  var eventtime = new Date(event.time);
+  eventtime = new Date(event.time);
   async.waterfall([
      read_crontab,
      execute_lambdas
